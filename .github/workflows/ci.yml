@@ -60,5 +60,9 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
         uses: docker/build-push-action@v6
         with:
-          push: true
+          context: .
+          file: Dockerfile.template
+          build-args: |
+            DOXYGEN_VERSION=${{ matrix.version }}
           tags: ${{ vars.DOCKER_USERNAME }}/doxygen:${{ matrix.version }}
+          push: true
