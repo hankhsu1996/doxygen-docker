@@ -1,7 +1,9 @@
 import json
+import os
 
 with open('versions.json', 'r') as file:
     versions = json.load(file)
 
-# Print the versions in the required format for GitHub Actions output
-print(f"::set-output name=matrix::{json.dumps(versions['versions'])}")
+# Write the versions to the GitHub output environment file
+with open(os.environ['GITHUB_OUTPUT'], 'a') as output_file:
+    output_file.write(f"matrix={json.dumps(versions['versions'])}\n")
