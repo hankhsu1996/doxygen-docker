@@ -1,0 +1,12 @@
+FROM ubuntu:22.04
+
+ARG DOXYGEN_VERSION
+RUN apt-get update && apt-get install -y \
+    wget \
+    graphviz \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY scripts/install_doxygen.sh /install_doxygen.sh
+RUN chmod +x /install_doxygen.sh && /install_doxygen.sh ${DOXYGEN_VERSION}
+
+CMD ["doxygen", "--version"]
